@@ -1,8 +1,8 @@
 package com.car_sharing.project_cs.service.impl;
 
-import com.example.carSharing.dao.impl.UserDaoImpl;
-import com.example.carSharing.entity.User;
-import com.example.carSharing.service.UserService;
+import com.car_sharing.project_cs.dao.impl.UserDaoImpl;
+import com.car_sharing.project_cs.entity.User;
+import com.car_sharing.project_cs.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

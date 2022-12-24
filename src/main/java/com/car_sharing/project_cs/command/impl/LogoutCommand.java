@@ -1,6 +1,6 @@
 package com.car_sharing.project_cs.command.impl;
 
-import com.example.carSharing.command.Command;
+import com.car_sharing.project_cs.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class LogoutCommand implements Command {

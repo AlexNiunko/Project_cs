@@ -5,9 +5,21 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1>"Welcome!"
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<form action="controller" >
+    <input type="hidden" name="command" value="login"/>
+    E-mail:<input type="text" name="login" value=""/>
+    <br/>
+    Password: <input type="password" name="pass" value=""/>
+    <br/>
+    <input type="submit" name="push" value="login" />
+    <br/>
+    ${login_msg}
+</form>
+<form action="pages/register.jsp" >
+    <input type="submit"  value="register">
+</form>
 </body>
 </html>

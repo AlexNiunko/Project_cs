@@ -1,6 +1,7 @@
 package com.car_sharing.project_cs.dao;
 
-import com.example.carSharing.entity.AbstractEntity;
+import com.car_sharing.project_cs.entity.AbstractEntity;
+
 
 import java.util.List;
 

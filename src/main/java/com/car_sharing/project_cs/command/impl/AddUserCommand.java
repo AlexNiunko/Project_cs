@@ -1,8 +1,9 @@
 package com.car_sharing.project_cs.command.impl;
 
-import com.example.carSharing.command.Command;
-import com.example.carSharing.service.UserService;
-import com.example.carSharing.service.impl.UserServiceImpl;
+
+import com.car_sharing.project_cs.command.Command;
+import com.car_sharing.project_cs.service.UserService;
+import com.car_sharing.project_cs.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.sql.Date;
@@ -18,7 +19,7 @@ public class AddUserCommand implements Command {
         String identification_number=request.getParameter("identification_number");
         String eMail=request.getParameter("e_mail");
         String password=request.getParameter("password");
-        UserService userService= UserServiceImpl.getInstance();
+        UserService userService=  UserServiceImpl.getInstance();
         if( (userService.register(name,surname,dateOfIssue,dateOfExpirity,identification_number,eMail,password)) ){
 //            request.setAttribute("user",name);
             page = "pages/main.jsp";

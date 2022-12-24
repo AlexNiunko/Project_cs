@@ -1,9 +1,10 @@
 package com.car_sharing.project_cs.dao.impl;
 
-import com.example.carSharing.dao.BaseDao;
-import com.example.carSharing.dao.UserDao;
-import com.example.carSharing.entity.User;
-import com.example.carSharing.pool.ConnectionPool;
+
+import com.car_sharing.project_cs.dao.BaseDao;
+import com.car_sharing.project_cs.dao.UserDao;
+import com.car_sharing.project_cs.entity.User;
+import com.car_sharing.project_cs.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +28,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     @Override
     public boolean insert(User user) {
         boolean match=false;
-        Connection connection=ConnectionPool.getInstance().getConnection();
+        Connection connection= ConnectionPool.getInstance().getConnection();
         String nameUser=user.getName();
         String surname=user.getSurName();
         Date dateOfIssue=user.getDateOfIssue();

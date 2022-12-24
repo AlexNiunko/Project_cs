@@ -1,8 +1,9 @@
 package com.car_sharing.project_cs.command.impl;
 
-import com.example.carSharing.command.Command;
-import com.example.carSharing.service.UserService;
-import com.example.carSharing.service.impl.UserServiceImpl;
+
+import com.car_sharing.project_cs.command.Command;
+import com.car_sharing.project_cs.service.UserService;
+import com.car_sharing.project_cs.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {

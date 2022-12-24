@@ -1,9 +1,10 @@
 package com.car_sharing.project_cs.command;
 
-import com.example.carSharing.command.impl.AddUserCommand;
-import com.example.carSharing.command.impl.LoginCommand;
-import com.example.carSharing.command.impl.LogoutCommand;
-import com.example.carSharing.command.impl.RegisterCommand;
+
+import com.car_sharing.project_cs.command.impl.AddUserCommand;
+import com.car_sharing.project_cs.command.impl.LoginCommand;
+import com.car_sharing.project_cs.command.impl.LogoutCommand;
+import com.car_sharing.project_cs.command.impl.RegisterCommand;
 
 public enum CommandType {
     ADD_USER(new AddUserCommand()),

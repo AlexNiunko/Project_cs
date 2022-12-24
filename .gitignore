@@ -6,7 +6,6 @@ target/
 ### IntelliJ IDEA ###
 /.idea
 /.mvn
-pom.xml
 
 ### Eclipse ###
 .apt_generated
