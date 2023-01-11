@@ -6,18 +6,15 @@ public class User extends AbstractEntity {
     private long idUser;
     private String name;
     private String surName;
-    private Date dateOfIssue;
-    private Date dateOfExpirity;
+    private String dateOfExpirity;
     private String identificationNumber;
     private String mail;
     private String pass;
     private UsersRole role;
 
-    public User( String name, String surName, Date dateOfIssue,
-                 Date dateOfExpirity, String identificationNumber, String mail, String pass) {
+    public User(String name, String surName, String dateOfExpirity, String identificationNumber, String mail, String pass) {
         this.name = name;
         this.surName = surName;
-        this.dateOfIssue = dateOfIssue;
         this.dateOfExpirity = dateOfExpirity;
         this.identificationNumber = identificationNumber;
         this.mail = mail;
@@ -73,19 +70,11 @@ public class User extends AbstractEntity {
         return role;
     }
 
-    public Date getDateOfIssue() {
-        return dateOfIssue;
-    }
-
-    public void setDateOfIssue(Date dateOfIssue) {
-        this.dateOfIssue = dateOfIssue;
-    }
-
-    public Date getDateOfExpirity() {
+    public String getDateOfExpirity() {
         return dateOfExpirity;
     }
 
-    public void setDateOfExpirity(Date dateOfExpirity) {
+    public void setDateOfExpirity(String dateOfExpirity) {
         this.dateOfExpirity = dateOfExpirity;
     }
 

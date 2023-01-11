@@ -6,6 +6,8 @@
 </head>
 <body>
 
-Hello=${user}
+Hello ${user}
+<hr/>
+<a href ="controller?command=logout">Logout</a>
 </body>
 </html>

@@ -11,6 +11,12 @@
     <title>500</title>
 </head>
 <body>
-java.lang.Throwable
+Request from: ${pageContext.errorData.requestURI} is failed<br/>
+Servlet name: ${pageContext.errorData.servletName}<br/>
+Status code: ${pageContext.errorData.statusCode}<br/>
+Exception: ${pageContext.exception}<br/>
+Exception: ${pageContext.exception.message}<br/>
+<br/><br/><br/>
+message from exception: ${error_msg}
 </body>
 </html>

@@ -2,6 +2,8 @@ package com.car_sharing.project_cs.service.impl;
 
 import com.car_sharing.project_cs.dao.impl.UserDaoImpl;
 import com.car_sharing.project_cs.entity.User;
+import com.car_sharing.project_cs.exception.DaoException;
+import com.car_sharing.project_cs.exception.ServiceException;
 import com.car_sharing.project_cs.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,23 +23,32 @@ public class UserServiceImpl implements UserService {
         return instance;
     }
     @Override
-    public boolean register(String name, String surname,
-                            Date dateOfIssue, Date dateOfExpirity,
-                            String identificationNumber, String pass, String mail) {
-        User user=new User(name,surname, dateOfIssue,dateOfExpirity,identificationNumber,pass,mail);
+    public boolean register(String name, String surname,String dateOfExpirity,String identificationNumber,
+                            String email,String password) throws ServiceException {
+        User user=new User(name,surname,dateOfExpirity,identificationNumber,email,password);
         UserDaoImpl userDao=UserDaoImpl.getInstance();
-        boolean match=userDao.insert(user);
-        return match;
+        boolean match;
+        try {
+            match = userDao.insert(user);
+            return match;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
     }
 
 
 
     @Override
-    public boolean authenticate(String login, String password) {
-        //validate login pass + md5
+    public boolean authenticate(String e_mail, String password) throws ServiceException {
         UserDaoImpl userDao=UserDaoImpl.getInstance();
-        boolean match= userDao.authenticate(login, password);
-        return match; // todo
+        boolean match= false;
+        try {
+            match = userDao.authenticate(e_mail, password);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return match;
     }
 
 }

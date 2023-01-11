@@ -1,15 +1,16 @@
 package com.car_sharing.project_cs.command;
 
 
-import com.car_sharing.project_cs.command.impl.AddUserCommand;
-import com.car_sharing.project_cs.command.impl.LoginCommand;
-import com.car_sharing.project_cs.command.impl.LogoutCommand;
-import com.car_sharing.project_cs.command.impl.RegisterCommand;
+import com.car_sharing.project_cs.command.impl.*;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 public enum CommandType {
-    ADD_USER(new AddUserCommand()),
+    ADD(new AddUserCommand()),
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
+    DEFAULT(new DefaultCommand()),
     REGISTER(new RegisterCommand());
 
     Command command;
@@ -18,12 +19,21 @@ public enum CommandType {
         this.command = command;
     }
 
-    public Command getCommand() {
+    private Command getCommand() {
         return command;
     }
 
     public static Command defineCommand(String commandStr){
-        CommandType currentCommand=CommandType.valueOf(commandStr.toUpperCase());
+        CommandType currentCommand ;
+        Optional<String>ifExist= Arrays.stream(CommandType.values())
+                .map(Enum::toString)
+                .filter(s->s.toUpperCase().matches(commandStr.toUpperCase()))
+                .findAny();
+        if (ifExist.isPresent()){
+            currentCommand=CommandType.valueOf(commandStr.toUpperCase());
+        }  else {
+            currentCommand=CommandType.DEFAULT;
+        }
         return currentCommand.command;
     }
 }

@@ -8,18 +8,23 @@
 <h1>"Welcome!"
 </h1>
 <br/>
-<form action="controller" >
+<form action="controller" method="post"  >
     <input type="hidden" name="command" value="login"/>
-    E-mail:<input type="text" name="login" value=""/>
+    E-mail:<input type="text" name="e_mail" value=""/>
     <br/>
-    Password: <input type="password" name="pass" value=""/>
+    Password: <input type="password" name="password" value=""/>
     <br/>
     <input type="submit" name="push" value="login" />
     <br/>
     ${login_msg}
 </form>
-<form action="pages/register.jsp" >
-    <input type="submit"  value="register">
+
+<%--<form action="pages/register.jsp" >--%>
+<%--    <input type="submit" name="push" value="register">--%>
+<%--</form>--%>
+<form action="controller" >
+    <input type="hidden" name="command"  value="register"/>
+    <input type="submit" name="push" value="register" />
 </form>
 </body>
 </html>

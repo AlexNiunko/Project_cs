@@ -3,6 +3,10 @@ package com.car_sharing.project_cs.pool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,33 +20,39 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectionPool {
     static final Logger logger = LogManager.getLogger();
     private static final int POOL_SIZE = 8;
+    public static final Properties PROPERTIES = new Properties();
+    private static final String PROPERTIES_PATH = "data.properties";
     private static ConnectionPool connectionInstance;
     private static Lock locker = new ReentrantLock();
     private static AtomicBoolean isInitialized = new AtomicBoolean(false);
     private BlockingQueue<ProxyConnection> free = new LinkedBlockingQueue<>();
-    private BlockingQueue<ProxyConnection> busy =new LinkedBlockingQueue<>();
+    private BlockingQueue<ProxyConnection> busy = new LinkedBlockingQueue<>();
 
     static {
-        try{
+        try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         } catch (SQLException e) {
-            logger.warn("Failed to register  MySql Driver {}",e.getMessage());
+            throw new ExceptionInInitializerError(e);
         }
     }
 
     private ConnectionPool() {
-        String url="jdbc:mysql://localhost:3306/car_sharing";
-        Properties prop=new Properties();
-        prop.put("user","root");
-        prop.put("password","AlexDasha8921_qwe");
-
-        for (int i = 0; i < POOL_SIZE; i++) {
-            Connection connection=null;
-            try {
-                free.add(new ProxyConnection(DriverManager.getConnection(url,prop)));
-            } catch (SQLException e) {
-                logger.warn("Failed to create connection {}", e.getMessage());
+//        String url="jdbc:mysql://localhost:3306/car_sharing";
+//        Properties prop=new Properties();
+//        prop.put("user","root");
+//        prop.put("password","AlexDasha8921_qwe");
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_PATH)) {
+            PROPERTIES.load(inputStream);
+            String url = PROPERTIES.getProperty("db.url");
+            for (int i = 0; i < POOL_SIZE; i++) {
+                try {
+                    free.add(new ProxyConnection(DriverManager.getConnection(url, PROPERTIES)));
+                } catch (SQLException e) {
+                    logger.error("Failed to create connection {}", e.getMessage());
+                }
             }
+        } catch (IOException e) {
+            logger.error("Failed to read configuration file {}", e.getMessage());
         }
     }
 
@@ -65,9 +75,10 @@ public class ConnectionPool {
         ProxyConnection connection = null;
         try {
             connection = free.take();
-            busy.put( connection);
+            busy.put(connection);
         } catch (InterruptedException e) {
-            logger.warn("failed to take connection from pool {}", e.getMessage());
+            logger.error("Failed to take connection from pool {}", e.getMessage());
+            Thread.currentThread().interrupt();
         }
         return connection;
     }
@@ -79,10 +90,11 @@ public class ConnectionPool {
                 busy.remove(proxy);
                 free.put(proxy);
             } else {
-                logger.warn("Enemy connection");
+                logger.error("Enemy connection");
             }
         } catch (InterruptedException e) {
-            logger.warn("failed to return connection to pool {}", e.getMessage());
+            logger.error("Failed to return connection to pool {}", e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -91,22 +103,18 @@ public class ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.warn("Failed to deregister driver {}", e.getMessage());
+                logger.error("Failed to deregister driver {}", e.getMessage());
             }
         });
     }
-
     public void destroyPool() {
         for (int i = 0; i < this.free.size(); i++) {
             try {
                 free.take().reallyClose();
             } catch (InterruptedException e) {
-                logger.warn("Failed to close connection {}", e.getMessage());
+                logger.error("Failed to close connection {}", e.getMessage());
             }
         }
         deregisterDriver();
     }
-
-
-
 }
