@@ -19,12 +19,12 @@
     ${login_msg}
 </form>
 
-<%--<form action="pages/register.jsp" >--%>
-<%--    <input type="submit" name="push" value="register">--%>
-<%--</form>--%>
-<form action="controller" >
-    <input type="hidden" name="command"  value="register"/>
-    <input type="submit" name="push" value="register" />
+<form action="${pageContext.request.contextPath}/pages/register.jsp" >
+    <input type="submit" name="push" value="register">
 </form>
+<%--<form action="controller" >--%>
+<%--    <input type="hidden" name="command"  value="register"/>--%>
+<%--    <input type="submit" name="push" value="register" />--%>
+<%--</form>--%>
 </body>
 </html>
