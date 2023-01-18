@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1> Please fill in the registration form </h1>
-<form action="controller" method="post">
+<form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="add">
     name:<input type="text" name="name" value=""/>
     <br/>
@@ -20,10 +20,9 @@
     <br/>
     password: <input type="text" name="password" value=""/>
     <br/>
-    <br/>
-    <br/>
     <input type="submit" name="push" value="add" />
     <br/>
 </form>
+${registration_msg}
 </body>
 </html>

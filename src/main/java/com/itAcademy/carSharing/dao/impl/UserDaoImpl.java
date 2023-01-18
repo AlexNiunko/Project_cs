@@ -29,22 +29,15 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     @Override
     public boolean insert(User user) throws DaoException {
         boolean match = false;
-        String nameUser = user.getName();
-        String surname = user.getSurName();
-        String dateOfExpirity = user.getDateOfExpirity();
-        String identification = user.getIdentificationNumber();
-        String password = user.getPass();
-        String mail = user.getMail();
-        int role=user.getRole();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_USER)) {
-            statement.setString(1, nameUser);
-            statement.setString(2, surname);
-            statement.setString(3, dateOfExpirity);
-            statement.setString(4, identification);
-            statement.setString(5, password);
-            statement.setString(6, mail);
-            statement.setString(7,String.valueOf(role));
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getSurName());
+            statement.setString(3, user.getDateOfExpirity());
+            statement.setString(4, user.getDrivingLicenseNumber());
+            statement.setString(5, user.getPass());
+            statement.setString(6, user.getMail());
+            statement.setString(7, String.valueOf(user.getRole()));
             statement.executeUpdate();
             match = true;
         } catch (SQLException e) {

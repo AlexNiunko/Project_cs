@@ -7,23 +7,23 @@ public class User extends AbstractEntity {
     private String name;
     private String surName;
     private String dateOfExpirity;
-    private String identificationNumber;
+    private String drivingLicenseNumber;
     private String mail;
     private String pass;
     private int role;
 
-    public enum UsersRole {
-        ADMIN,
-        CUSTOMER
-    }
 
     public User(String name, String surName, String dateOfExpirity, String identificationNumber, String mail, String pass) {
         this.name = name;
         this.surName = surName;
         this.dateOfExpirity = dateOfExpirity;
-        this.identificationNumber = identificationNumber;
+        this.drivingLicenseNumber = identificationNumber;
         this.mail = mail;
         this.pass = pass;
+        this.role = UsersRole.CUSTOMER.ordinal();
+    }
+
+    public User() {
         this.role = UsersRole.CUSTOMER.ordinal();
     }
 
@@ -43,8 +43,8 @@ public class User extends AbstractEntity {
         this.surName = surName;
     }
 
-    public String getIdentificationNumber() {
-        return identificationNumber;
+    public String getDrivingLicenseNumber() {
+        return drivingLicenseNumber;
     }
 
     public String getMail() {
@@ -63,6 +63,18 @@ public class User extends AbstractEntity {
         return dateOfExpirity;
     }
 
+    public void setDrivingLicenseNumber(String drivingLicenseNumber) {
+        this.drivingLicenseNumber = drivingLicenseNumber;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
     public void setDateOfExpirity(String dateOfExpirity) {
         this.dateOfExpirity = dateOfExpirity;
     }
@@ -76,12 +88,12 @@ public class User extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return role == user.role && name.equals(user.name) && surName.equals(user.surName) && dateOfExpirity.equals(user.dateOfExpirity) && identificationNumber.equals(user.identificationNumber) && mail.equals(user.mail) && pass.equals(user.pass);
+        return role == user.role && name.equals(user.name) && surName.equals(user.surName) && dateOfExpirity.equals(user.dateOfExpirity) && drivingLicenseNumber.equals(user.drivingLicenseNumber) && mail.equals(user.mail) && pass.equals(user.pass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surName, dateOfExpirity, identificationNumber, mail, pass, role);
+        return Objects.hash(name, surName, dateOfExpirity, drivingLicenseNumber, mail, pass, role);
     }
 
     @Override
@@ -90,7 +102,7 @@ public class User extends AbstractEntity {
                 .add("name='" + name + "'")
                 .add("surName='" + surName + "'")
                 .add("dateOfExpirity='" + dateOfExpirity + "'")
-                .add("identificationNumber='" + identificationNumber + "'")
+                .add("identificationNumber='" + drivingLicenseNumber + "'")
                 .add("mail='" + mail + "'")
                 .add("pass='" + pass + "'")
                 .add("role=" + role)

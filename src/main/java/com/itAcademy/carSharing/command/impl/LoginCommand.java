@@ -31,6 +31,7 @@ public class LoginCommand implements Command {
             } else {
                 request.setAttribute(AttributeName.LOGIN_MSG,"incorrect login or password");
                 page = PagePath.INDEX;
+                router.setRedirect();
                 router.setPage(page);
             }
         } catch (ServiceException e) {

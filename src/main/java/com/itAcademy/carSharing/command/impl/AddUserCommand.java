@@ -8,12 +8,14 @@ import com.itAcademy.carSharing.exception.ServiceException;
 import com.itAcademy.carSharing.service.UserService;
 import com.itAcademy.carSharing.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class AddUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router=new Router();
         String page;
+        HttpSession session= request.getSession();
         String name=request.getParameter(ParameterName.NAME);
         String surname=request.getParameter(ParameterName.SURNAME);
         String dateOfExpirity= request.getParameter(ParameterName.DATE_OF_EXPIRITY);
@@ -23,12 +25,14 @@ public class AddUserCommand implements Command {
         UserService userService= UserServiceImpl.getInstance();
         try {
             if( (userService.register(name,surname,dateOfExpirity,identificationNumber,eMail,password)) ){
-    //            request.setAttribute("user",name);
+                request.setAttribute("user",name);
                 router.setRedirect();
                 page = PagePath.MAIN;
                 router.setPage(page);
             } else {
-                request.setAttribute(AttributeName.LOGIN_MSG,"incorrect login or password");
+                request.setAttribute(AttributeName.REGISTRATION_MSG,"incorrect data input");
+                session.setAttribute(AttributeName.REGISTRATION_MSG,"incorrect data input");
+                router.setRedirect();
                 page = PagePath.REGISTER;
                 router.setPage(page);
             }
